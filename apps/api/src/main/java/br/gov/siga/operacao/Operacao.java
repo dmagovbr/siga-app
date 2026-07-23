@@ -17,10 +17,10 @@ public class Operacao {
     @Column(name = "id_operacao")
     private Long id;
 
-    @Column(name = "id_etapa_operacao_fk", nullable = false)
+    @Column(name = "id_etapa_operacao_fk")
     private Long etapaId = 10L;
 
-    @Column(name = "id_visibilidade_fk", nullable = false, length = 1)
+    @Column(name = "id_visibilidade_fk", columnDefinition = "char(1)", nullable = false, length = 1)
     private String visibilidadeId = "R";
 
     @Column(name = "nr_inquerito_ipl", length = 12)
@@ -41,10 +41,10 @@ public class Operacao {
     @Column(name = "ds_notas", length = 4000)
     private String notas;
 
-    @Column(name = "dt_cadastro", nullable = false, insertable = false, updatable = false)
+    @Column(name = "dt_cadastro", insertable = false, updatable = false)
     private LocalDateTime dataCadastro;
 
-    @Column(name = "dt_ultima_alteracao", nullable = false)
+    @Column(name = "dt_ultima_alteracao")
     private LocalDateTime dataUltimaAlteracao = LocalDateTime.now();
 
     protected Operacao() {}
