@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public record OperacaoRequest(
     @NotBlank @Size(max = 255) String nome,
-    @Size(max = 40) String numeroInquerito,
+    @Size(max = 12) String numeroInquerito,
     @Size(max = 1000) String razaoNome,
     LocalDate dataInicio,
     @Size(max = 2000) String descricao,

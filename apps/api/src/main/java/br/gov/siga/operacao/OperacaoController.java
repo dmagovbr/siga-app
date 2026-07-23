@@ -1,7 +1,7 @@
 package br.gov.siga.operacao;
 
 import jakarta.validation.Valid;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -38,7 +38,7 @@ public class OperacaoController {
         operacao.setNotas(request.notas());
         operacao.setEtapaId(request.etapaId() == null ? 10L : request.etapaId());
         operacao.setVisibilidadeId(request.visibilidadeId() == null ? "R" : request.visibilidadeId());
-        operacao.setDataUltimaAlteracao(OffsetDateTime.now());
+        operacao.setDataUltimaAlteracao(LocalDateTime.now());
         return repository.save(operacao);
     }
 }

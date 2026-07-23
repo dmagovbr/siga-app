@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_operacao")
@@ -23,7 +23,7 @@ public class Operacao {
     @Column(name = "id_visibilidade_fk", nullable = false, length = 1)
     private String visibilidadeId = "R";
 
-    @Column(name = "nr_inquerito_ipl", length = 40)
+    @Column(name = "nr_inquerito_ipl", length = 12)
     private String numeroInquerito;
 
     @Column(name = "no_operacao", nullable = false, length = 255)
@@ -42,10 +42,10 @@ public class Operacao {
     private String notas;
 
     @Column(name = "dt_cadastro", nullable = false, insertable = false, updatable = false)
-    private OffsetDateTime dataCadastro;
+    private LocalDateTime dataCadastro;
 
     @Column(name = "dt_ultima_alteracao", nullable = false)
-    private OffsetDateTime dataUltimaAlteracao = OffsetDateTime.now();
+    private LocalDateTime dataUltimaAlteracao = LocalDateTime.now();
 
     protected Operacao() {}
 
@@ -66,7 +66,7 @@ public class Operacao {
     public void setDescricao(String descricao) { this.descricao = descricao; }
     public String getNotas() { return notas; }
     public void setNotas(String notas) { this.notas = notas; }
-    public OffsetDateTime getDataCadastro() { return dataCadastro; }
-    public OffsetDateTime getDataUltimaAlteracao() { return dataUltimaAlteracao; }
-    public void setDataUltimaAlteracao(OffsetDateTime dataUltimaAlteracao) { this.dataUltimaAlteracao = dataUltimaAlteracao; }
+    public LocalDateTime getDataCadastro() { return dataCadastro; }
+    public LocalDateTime getDataUltimaAlteracao() { return dataUltimaAlteracao; }
+    public void setDataUltimaAlteracao(LocalDateTime dataUltimaAlteracao) { this.dataUltimaAlteracao = dataUltimaAlteracao; }
 }
