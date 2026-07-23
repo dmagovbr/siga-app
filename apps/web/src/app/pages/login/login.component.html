@@ -1,0 +1,38 @@
+<div class="login-page">
+  <section class="login-brand">
+    <div class="seal">S</div>
+    <div>
+      <strong>SIGACrim</strong>
+      <span>Sistema de Gestão de Operações Criminais</span>
+    </div>
+  </section>
+
+  <section class="login-card" aria-labelledby="login-title">
+    <header>
+      <p>Acesso ao sistema</p>
+      <h1 id="login-title">Entrar no SIGACrim</h1>
+      <span>Use suas credenciais institucionais.</span>
+    </header>
+
+    <form (ngSubmit)="entrar()">
+      <label>
+        <span>Usuário</span>
+        <input name="usuario" [(ngModel)]="usuario" autocomplete="username" required autofocus>
+      </label>
+      <label>
+        <span>Senha</span>
+        <input name="senha" [(ngModel)]="senha" type="password" autocomplete="current-password" required>
+      </label>
+
+      <div class="error" *ngIf="erro()">{{ erro() }}</div>
+      <button type="submit" [disabled]="carregando()">
+        {{ carregando() ? 'Entrando...' : 'Entrar' }}
+      </button>
+    </form>
+
+    <footer>
+      <span>Ambiente local</span>
+      <small>Usuário inicial: admin</small>
+    </footer>
+  </section>
+</div>
