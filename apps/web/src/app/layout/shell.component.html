@@ -1,0 +1,35 @@
+<div class="app-shell" [class.menu-collapsed]="collapsed()">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">S</div>
+      <div class="brand-copy">
+        <strong>SIGACrim</strong>
+        <span>Sistema de Gestão</span>
+      </div>
+    </div>
+
+    <nav aria-label="Menu principal">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <span class="icon">⌂</span><span class="label">Início</span>
+      </a>
+      <button type="button" disabled><span class="icon">▤</span><span class="label">Cadastros</span></button>
+      <button type="button" disabled><span class="icon">✓</span><span class="label">Processos</span></button>
+      <button type="button" disabled><span class="icon">▥</span><span class="label">Relatórios</span></button>
+      <button type="button" disabled><span class="icon">⚙</span><span class="label">Administração</span></button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <span class="status-dot"></span>
+      <span class="label">Ambiente local</span>
+    </div>
+  </aside>
+
+  <section class="workspace">
+    <header class="topbar">
+      <button class="menu-toggle" type="button" (click)="toggleMenu()" aria-label="Recolher ou expandir menu">☰</button>
+      <div class="breadcrumb">SIGACrim <span>/</span> Início</div>
+      <div class="user"><span>Usuário local</span><div class="avatar">UL</div></div>
+    </header>
+    <main><ng-content /></main>
+  </section>
+</div>

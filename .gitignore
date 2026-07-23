@@ -1,0 +1,16 @@
+# Java
+apps/api/target/
+*.log
+
+# Angular
+apps/web/node_modules/
+apps/web/dist/
+apps/web/.angular/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Environment
+.env
