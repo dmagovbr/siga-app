@@ -11,6 +11,8 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
+"$ROOT/deploy/local/db-start.sh"
+
 if [[ ! -d "$ROOT/apps/web/node_modules" ]]; then
   echo "ERRO: execute primeiro ./deploy/local/setup.sh"
   exit 1
@@ -31,5 +33,7 @@ PIDS+=("$!")
 echo "[start] SIGACrim iniciado. Pressione Ctrl+C para encerrar."
 echo "[start] Site: http://localhost:4200"
 echo "[start] API:  http://localhost:8080/api/health"
+echo "[start] Operações: http://localhost:8080/api/operacoes"
+echo "[start] PostgreSQL: localhost:5432/sigacrim"
 
 wait -n "${PIDS[@]}"
