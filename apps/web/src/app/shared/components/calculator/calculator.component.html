@@ -1,10 +1,14 @@
+<!-- OBJETIVO DO TEMPLATE: Implementa a responsabilidade definida pelo arquivo calculator.component.html. -->
+<!-- Comentários marcam blocos visuais; atributos autoexplicativos não são comentados individualmente. -->
 <button class="calculator-trigger" type="button" (click)="openCalculator()" aria-label="Abrir calculadora" title="Calculadora">
   <app-lucide-icon name="calculator" />
 </button>
 
 @if (open()) {
   <div class="calculator-backdrop" (mousedown)="closeCalculator()">
+    <!-- Agrupamento semântico de conteúdo relacionado. -->
     <section #dialog class="calculator-dialog" tabindex="-1" role="dialog" aria-modal="true" aria-label="Calculadora" (mousedown)="$event.stopPropagation()">
+      <!-- Cabeçalho visual e ações principais desta área. -->
       <header class="calculator-header">
         <div>
           <strong>Calculadora</strong>

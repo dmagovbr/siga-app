@@ -1,5 +1,9 @@
+/** OBJETIVO DO ARQUIVO: Exibe uma página temporária para funcionalidades ainda não implementadas.
+ * Os comentários explicam responsabilidades e pontos de decisão sem repetir sintaxe óbvia.
+ */
 import { Component, input } from '@angular/core';
 
+// Declara metadados usados pelo Angular para criar e renderizar o componente.
 @Component({
   selector: 'app-placeholder',
   standalone: true,
@@ -20,6 +24,7 @@ import { Component, input } from '@angular/core';
     .empty-icon{font-size:36px;color:var(--gold);line-height:1}
   `]
 })
+// Exporta este contrato ou implementação para uso por outros módulos.
 export class PlaceholderComponent {
   readonly titulo = input.required<string>();
 }

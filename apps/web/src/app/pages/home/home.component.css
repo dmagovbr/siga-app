@@ -1,3 +1,6 @@
+/* OBJETIVO DOS ESTILOS: Implementa a responsabilidade definida pelo arquivo home.component.css.
+ * As regras são agrupadas pelo elemento visual que controlam.
+ */
 .hero-clean{min-height:calc(100vh - 160px);display:grid;place-content:center;justify-items:center;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:48px 24px}
 .hero-clean h1{margin:0;font-size:34px;color:var(--text)}
 .hero-clean p{margin:14px 0 0;color:var(--text-soft);font-size:16px;max-width:720px;line-height:1.6}

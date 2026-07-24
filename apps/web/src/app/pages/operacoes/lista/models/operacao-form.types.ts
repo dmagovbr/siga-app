@@ -1,5 +1,9 @@
+/** OBJETIVO DO ARQUIVO: Define tipos fortes usados pelo formulário de operação.
+ * Os comentários explicam responsabilidades e pontos de decisão sem repetir sintaxe óbvia.
+ */
 import { FormControl, FormGroup } from '@angular/forms';
 
+// Exporta este contrato ou implementação para uso por outros módulos.
 export interface OperacaoFormValue {
   nome: string;
   numeroInquerito: string;
@@ -11,6 +15,7 @@ export interface OperacaoFormValue {
   visibilidadeId: string;
 }
 
+// Exporta este contrato ou implementação para uso por outros módulos.
 export type OperacaoForm = FormGroup<{
   nome: FormControl<string>;
   numeroInquerito: FormControl<string>;

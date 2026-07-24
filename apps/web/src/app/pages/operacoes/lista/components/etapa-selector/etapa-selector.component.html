@@ -1,3 +1,5 @@
+<!-- OBJETIVO DO TEMPLATE: Implementa a responsabilidade definida pelo arquivo etapa-selector.component.html. -->
+<!-- Comentários marcam blocos visuais; atributos autoexplicativos não são comentados individualmente. -->
 <div class="stage-selector" aria-label="Etapa da operação">
   <button type="button" [class.active]="etapaId === 10" [disabled]="!disponivel(10)" (click)="etapaSelecionada.emit(10)">
     <span class="stage-number">01</span><span><strong>Cadastro</strong><small>Etapa inicial</small></span>

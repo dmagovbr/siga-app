@@ -1,4 +1,7 @@
+<!-- OBJETIVO DO TEMPLATE: Implementa a responsabilidade definida pelo arquivo shell.component.html. -->
+<!-- Comentários marcam blocos visuais; atributos autoexplicativos não são comentados individualmente. -->
 <div class="app-shell" [class.menu-collapsed]="collapsed()">
+  <!-- Área complementar ao conteúdo principal. -->
   <aside class="sidebar">
     <div class="brand">
       <img class="brand-mark" src="/brand/siga-crim-mark.svg" alt="SIGACrim">
@@ -8,6 +11,7 @@
       </div>
     </div>
 
+    <!-- Navegação disponível para o usuário. -->
     <nav aria-label="Menu principal">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" title="Início">
         <span class="icon">⌂</span><span class="label">Início</span>
@@ -54,7 +58,9 @@
     </div>
   </aside>
 
+  <!-- Agrupamento semântico de conteúdo relacionado. -->
   <section class="workspace">
+    <!-- Cabeçalho visual e ações principais desta área. -->
     <header class="topbar">
       <button class="menu-toggle" type="button" (click)="toggleMenu()" aria-label="Recolher ou expandir menu">☰</button>
       <div class="breadcrumb">SIGACrim <span>/</span> Área de trabalho</div>
@@ -82,6 +88,7 @@
         </div>
       </div>
     </header>
+    <!-- Conteúdo principal exibido nesta rota. -->
     <main><ng-content /></main>
   </section>
 </div>

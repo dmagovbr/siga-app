@@ -1,9 +1,13 @@
+<!-- OBJETIVO DO TEMPLATE: Implementa a responsabilidade definida pelo arquivo operacoes-grid.component.html. -->
+<!-- Comentários marcam blocos visuais; atributos autoexplicativos não são comentados individualmente. -->
 @if (carregando) { <div class="state">Carregando operações...</div> }
 @else if (erro) { <div class="state error">{{ erro }}</div> }
 @else if (!operacoes.length) { <div class="state">Nenhuma operação cadastrada.</div> }
 @else {
   <div class="table-wrap">
+    <!-- Tabela responsável pela apresentação dos registros. -->
     <table>
+      <!-- Cabeçalho que identifica as colunas do grid. -->
       <thead><tr>
         <th class="actions-column actions-column-start">Ações</th>
         <th class="sortable" [attr.aria-sort]="ariaSort('nome')" (click)="ordenar.emit('nome')">
@@ -22,6 +26,7 @@
           <span>Data de início</span><span class="sort-indicator">{{ indicador('dataInicio') }}</span><span appColumnResize class="column-resizer"></span>
         </th>
       </tr></thead>
+      <!-- Corpo preenchido dinamicamente com os registros. -->
       <tbody>
         @for (op of operacoes; track op.id) {
           <tr>

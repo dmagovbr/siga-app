@@ -1,4 +1,7 @@
+<!-- OBJETIVO DO TEMPLATE: Implementa a responsabilidade definida pelo arquivo login.component.html. -->
+<!-- Comentários marcam blocos visuais; atributos autoexplicativos não são comentados individualmente. -->
 <div class="login-page">
+  <!-- Agrupamento semântico de conteúdo relacionado. -->
   <section class="login-brand">
     <img class="seal" src="/brand/siga-crim-mark.svg" alt="SIGACrim">
     <div>
@@ -7,13 +10,16 @@
     </div>
   </section>
 
+  <!-- Agrupamento semântico de conteúdo relacionado. -->
   <section class="login-card" aria-labelledby="login-title">
+    <!-- Cabeçalho visual e ações principais desta área. -->
     <header>
       <p>Acesso ao sistema</p>
       <h1 id="login-title">Entrar no SIGACrim</h1>
       <span>Use suas credenciais institucionais.</span>
     </header>
 
+    <!-- Formulário que captura e valida os dados informados. -->
     <form (ngSubmit)="entrar()">
       <label>
         <span>Usuário</span>

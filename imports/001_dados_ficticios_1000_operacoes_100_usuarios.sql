@@ -1,3 +1,5 @@
+-- OBJETIVO DO SCRIPT: Implementa a responsabilidade definida pelo arquivo 001_dados_ficticios_1000_operacoes_100_usuarios.sql.
+-- Cada bloco descreve a estrutura ou os dados que serão criados no banco.
 -- SIGACrim - carga fictícia para desenvolvimento e homologação
 -- Banco: PostgreSQL 17
 -- Conteúdo: 1.000 operações e 100 usuários
@@ -24,6 +26,7 @@ where cd_usuario like 'teste%';
 -- E-mail: teste001@sigacrim.local até teste100@sigacrim.local
 -- Senha: Senha@123 (BCrypt)
 -- -----------------------------------------------------------------------------
+-- Insere um registro inicial necessário para o funcionamento do sistema.
 insert into tb_usuario
 (
     cd_usuario,
@@ -67,6 +70,7 @@ from generate_series(1, 100) as serie(numero);
 -- Distribui visibilidade, datas, status e textos para testar grid, filtros,
 -- ordenação, paginação e carga incremental.
 -- -----------------------------------------------------------------------------
+-- Insere um registro inicial necessário para o funcionamento do sistema.
 insert into tb_operacao
 (
     id_etapa_operacao_fk,

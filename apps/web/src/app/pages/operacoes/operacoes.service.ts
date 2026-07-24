@@ -1,6 +1,10 @@
+/** OBJETIVO DO ARQUIVO: Centraliza as chamadas HTTP relacionadas a operações.
+ * Os comentários explicam responsabilidades e pontos de decisão sem repetir sintaxe óbvia.
+ */
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
+// Exporta este contrato ou implementação para uso por outros módulos.
 export interface Operacao {
   id: number;
   etapaId: number;
@@ -15,6 +19,7 @@ export interface Operacao {
   dataUltimaAlteracao: string | null;
 }
 
+// Exporta este contrato ou implementação para uso por outros módulos.
 export interface Pagina<T> {
   content: T[];
   number: number;
@@ -26,9 +31,12 @@ export interface Pagina<T> {
   numberOfElements: number;
 }
 
+// Exporta este contrato ou implementação para uso por outros módulos.
 export interface EtapaOperacao { id: number; codigo: string; descricao: string; }
+// Exporta este contrato ou implementação para uso por outros módulos.
 export interface Visibilidade { id: string; descricao: string; }
 
+// Exporta este contrato ou implementação para uso por outros módulos.
 export interface OperacaoPayload {
   nome: string;
   numeroInquerito: string | null;
@@ -40,10 +48,13 @@ export interface OperacaoPayload {
   visibilidadeId: string;
 }
 
+// Permite que o Angular injete esta classe onde ela for necessária.
 @Injectable({ providedIn: 'root' })
+// Exporta este contrato ou implementação para uso por outros módulos.
 export class OperacoesService {
   private readonly http = inject(HttpClient);
 
+  /** Executa `listar` e mantém esta etapa do fluxo concentrada em um único ponto. */
   listar(page = 0, size = 20, sort = 'id', direction: 'asc' | 'desc' = 'desc', q = '') {
     const params = new HttpParams()
       .set('page', page)
@@ -51,6 +62,7 @@ export class OperacoesService {
       .set('sort', sort)
       .set('direction', direction)
       .set('q', q);
+    // Retorna o valor calculado sem manter estado oculto.
     return this.http.get<Pagina<Operacao>>('/api/operacoes', { params });
   }
 

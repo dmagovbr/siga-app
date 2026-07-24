@@ -1,7 +1,12 @@
+/** OBJETIVO DO ARQUIVO: Encapsula a renderização segura dos ícones Lucide usados na interface.
+ * Os comentários explicam responsabilidades e pontos de decisão sem repetir sintaxe óbvia.
+ */
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
+// Exporta este contrato ou implementação para uso por outros módulos.
 export type LucideIconName = 'square-pen' | 'calculator' | 'x' | 'delete';
 
+// Declara metadados usados pelo Angular para criar e renderizar o componente.
 @Component({
   selector: 'app-lucide-icon',
   standalone: true,
@@ -43,6 +48,7 @@ export type LucideIconName = 'square-pen' | 'calculator' | 'x' | 'delete';
     svg { width: 100%; height: 100%; }
   `]
 })
+// Exporta este contrato ou implementação para uso por outros módulos.
 export class LucideIconComponent {
   @Input({ required: true }) name!: LucideIconName;
 }

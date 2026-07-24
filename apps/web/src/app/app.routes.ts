@@ -1,3 +1,6 @@
+/** OBJETIVO DO ARQUIVO: Centraliza as rotas, redirecionamentos e proteções de acesso.
+ * Os comentários explicam responsabilidades e pontos de decisão sem repetir sintaxe óbvia.
+ */
 import { Routes } from '@angular/router';
 import { authGuard } from './auth/auth.guard';
 import { HomeComponent } from './pages/home/home.component';
@@ -6,6 +9,7 @@ import { PlaceholderComponent } from './pages/placeholder/placeholder.component'
 import { OperacoesListaComponent } from './pages/operacoes/lista/operacoes-lista.component';
 import { EventosListaComponent } from './pages/eventos/lista/eventos-lista.component';
 
+// Exporta este contrato ou implementação para uso por outros módulos.
 export const routes: Routes = [
   { path: 'login', component: LoginComponent, title: 'Acesso | SIGACrim' },
   { path: '', component: HomeComponent, canActivate: [authGuard], title: 'Início | SIGACrim' },

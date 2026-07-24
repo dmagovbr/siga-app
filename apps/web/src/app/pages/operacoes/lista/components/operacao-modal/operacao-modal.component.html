@@ -1,5 +1,9 @@
+<!-- OBJETIVO DO TEMPLATE: Implementa a responsabilidade definida pelo arquivo operacao-modal.component.html. -->
+<!-- Comentários marcam blocos visuais; atributos autoexplicativos não são comentados individualmente. -->
 <div class="modal-backdrop" (mousedown)="solicitarFechamento()">
+  <!-- Agrupamento semântico de conteúdo relacionado. -->
   <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" (mousedown)="$event.stopPropagation()">
+    <!-- Cabeçalho visual e ações principais desta área. -->
     <header class="modal-header">
       <h2 id="modal-title">{{ operacao ? 'Alterar Operação' : 'Nova Operação' }}</h2>
       <button class="close-button" type="button" aria-label="Fechar" (click)="solicitarFechamento()">×</button>
@@ -10,6 +14,7 @@
       [etapasDisponiveis]="etapasDisponiveis"
       (etapaSelecionada)="etapaSelecionada.emit($event)" />
 
+    <!-- Formulário que captura e valida os dados informados. -->
     <form [formGroup]="form" (ngSubmit)="salvar.emit()">
       <app-operacao-form-fields [form]="form" [visibilidades]="visibilidades" />
       @if (erro) { <p class="form-error">{{ erro }}</p> }

@@ -1,7 +1,11 @@
+/** OBJETIVO DO ARQUIVO: Converte dados entre API, formulário e payload de gravação.
+ * Os comentários explicam responsabilidades e pontos de decisão sem repetir sintaxe óbvia.
+ */
 import { FormBuilder, Validators } from '@angular/forms';
 import { Operacao, OperacaoPayload } from '../../operacoes.service';
 import { OperacaoForm, OperacaoFormValue } from '../models/operacao-form.types';
 
+// Exporta este contrato ou implementação para uso por outros módulos.
 export const OPERACAO_FORM_VAZIO: OperacaoFormValue = {
   nome: '',
   numeroInquerito: '',
@@ -13,7 +17,9 @@ export const OPERACAO_FORM_VAZIO: OperacaoFormValue = {
   visibilidadeId: 'R'
 };
 
+// Exporta este contrato ou implementação para uso por outros módulos.
 export function criarOperacaoForm(fb: FormBuilder): OperacaoForm {
+  // Retorna o valor calculado sem manter estado oculto.
   return fb.nonNullable.group({
     nome: ['', [Validators.required, Validators.maxLength(255)]],
     numeroInquerito: ['', Validators.maxLength(12)],
@@ -26,7 +32,9 @@ export function criarOperacaoForm(fb: FormBuilder): OperacaoForm {
   });
 }
 
+// Exporta este contrato ou implementação para uso por outros módulos.
 export function operacaoParaFormulario(operacao: Operacao): OperacaoFormValue {
+  // Retorna o valor calculado sem manter estado oculto.
   return {
     nome: operacao.nome,
     numeroInquerito: operacao.numeroInquerito ?? '',
@@ -39,7 +47,9 @@ export function operacaoParaFormulario(operacao: Operacao): OperacaoFormValue {
   };
 }
 
+// Exporta este contrato ou implementação para uso por outros módulos.
 export function formularioParaPayload(valor: OperacaoFormValue): OperacaoPayload {
+  // Retorna o valor calculado sem manter estado oculto.
   return {
     ...valor,
     numeroInquerito: valor.numeroInquerito || null,
