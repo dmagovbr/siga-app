@@ -1,25 +1,61 @@
 <section class="page-head">
-  <div><p>Gestão de Operações</p><h1>Lista de Operações</h1><span>Consulta das operações cadastradas.</span></div>
+  <h1>Cadastros de Operações</h1>
   <button class="primary-button" type="button" (click)="abrirCadastro()">Nova operação</button>
 </section>
 
 <section class="panel">
   <div class="toolbar">
-    <input type="search" placeholder="Buscar por nome ou inquérito" [value]="busca()" (input)="busca.set($any($event.target).value)">
-    <span>{{ filtradas().length }} operação(ões)</span>
+    <input type="search" placeholder="Buscar por nome ou inquérito" [value]="busca()" (input)="atualizarBusca($any($event.target).value)">
+    <span>{{ exibidas().length }} de {{ total() }} operação(ões)</span>
   </div>
   @if (carregando()) { <div class="state">Carregando operações...</div> }
   @else if (erro()) { <div class="state error">{{ erro() }}</div> }
-  @else if (!filtradas().length) { <div class="state">Nenhuma operação cadastrada.</div> }
+  @else if (!exibidas().length) { <div class="state">Nenhuma operação cadastrada.</div> }
   @else {
     <div class="table-wrap"><table>
-      <thead><tr><th>Nome</th><th>Inquérito</th><th>Etapa</th><th>Visibilidade</th><th>Data de início</th></tr></thead>
+      <thead><tr>
+        <th class="actions-column actions-column-start">Ações</th>
+        <th #nomeCol class="sortable" [attr.aria-sort]="ariaSort('nome')" (click)="ordenar('nome')">
+          <span>Nome</span><span class="sort-indicator">{{ ordenacao() === 'nome' ? (direcao() === 'asc' ? '↑' : '↓') : '↕' }}</span>
+          <span class="column-resizer" (pointerdown)="iniciarRedimensionamento($event, nomeCol)"></span>
+        </th>
+        <th #inqueritoCol class="sortable" [attr.aria-sort]="ariaSort('numeroInquerito')" (click)="ordenar('numeroInquerito')">
+          <span>Inquérito</span><span class="sort-indicator">{{ ordenacao() === 'numeroInquerito' ? (direcao() === 'asc' ? '↑' : '↓') : '↕' }}</span>
+          <span class="column-resizer" (pointerdown)="iniciarRedimensionamento($event, inqueritoCol)"></span>
+        </th>
+        <th #etapaCol class="sortable" [attr.aria-sort]="ariaSort('etapaId')" (click)="ordenar('etapaId')">
+          <span>Etapa</span><span class="sort-indicator">{{ ordenacao() === 'etapaId' ? (direcao() === 'asc' ? '↑' : '↓') : '↕' }}</span>
+          <span class="column-resizer" (pointerdown)="iniciarRedimensionamento($event, etapaCol)"></span>
+        </th>
+        <th #visibilidadeCol class="sortable" [attr.aria-sort]="ariaSort('visibilidadeId')" (click)="ordenar('visibilidadeId')">
+          <span>Visibilidade</span><span class="sort-indicator">{{ ordenacao() === 'visibilidadeId' ? (direcao() === 'asc' ? '↑' : '↓') : '↕' }}</span>
+          <span class="column-resizer" (pointerdown)="iniciarRedimensionamento($event, visibilidadeCol)"></span>
+        </th>
+        <th #dataCol class="sortable" [attr.aria-sort]="ariaSort('dataInicio')" (click)="ordenar('dataInicio')">
+          <span>Data de início</span><span class="sort-indicator">{{ ordenacao() === 'dataInicio' ? (direcao() === 'asc' ? '↑' : '↓') : '↕' }}</span>
+          <span class="column-resizer" (pointerdown)="iniciarRedimensionamento($event, dataCol)"></span>
+        </th>
+      </tr></thead>
       <tbody>
-        @for (op of filtradas(); track op.id) {
-          <tr><td><strong>{{ op.nome }}</strong><small>{{ op.razaoNome || '—' }}</small></td><td class="fixed-value">{{ op.numeroInquerito || '—' }}</td><td>{{ etapa(op.etapaId) }}</td><td>{{ visibilidade(op.visibilidadeId) }}</td><td class="fixed-value">{{ op.dataInicio ? (op.dataInicio | date:'dd/MM/yyyy') : '—' }}</td></tr>
+        @for (op of exibidas(); track op.id) {
+          <tr>
+            <td class="actions-column actions-column-start">
+              <button class="table-action table-action-icon" type="button" title="Alterar operação" aria-label="Alterar operação {{ op.nome }}" (click)="abrirEdicao(op)">
+                <app-lucide-icon name="square-pen" />
+              </button>
+            </td>
+            <td><strong>{{ op.nome }}</strong><small>{{ op.razaoNome || '—' }}</small></td>
+            <td class="fixed-value">{{ op.numeroInquerito || '—' }}</td>
+            <td>{{ etapa(op.etapaId) }}</td>
+            <td>{{ visibilidade(op.visibilidadeId) }}</td>
+            <td class="fixed-value">{{ op.dataInicio ? (op.dataInicio | date:'dd/MM/yyyy') : '—' }}</td>
+          </tr>
         }
       </tbody>
-    </table></div>
+    </table>
+      <div #sentinela class="load-sentinel" aria-hidden="true"></div>
+    </div>
+    @if (carregandoMais()) { <div class="loading-more">Carregando mais 20 operações...</div> }
   }
 </section>
 
@@ -27,7 +63,7 @@
   <div class="modal-backdrop" (mousedown)="fecharCadastro()">
     <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" (mousedown)="$event.stopPropagation()">
       <header class="modal-header">
-        <div><p>Gestão de Operações</p><h2 id="modal-title">Cadastrar Operação</h2><span>Registro inicial da operação.</span></div>
+        <h2 id="modal-title">{{ operacaoEmEdicao() ? 'Alterar Operação' : 'Nova Operação' }}</h2>
         <button class="close-button" type="button" aria-label="Fechar" (click)="fecharCadastro()">×</button>
       </header>
 
@@ -54,7 +90,14 @@
           <label class="wide"><span>Notas</span><textarea rows="2" formControlName="notas" maxlength="4000"></textarea></label>
         </div>
         @if (erroCadastro()) { <p class="form-error">{{ erroCadastro() }}</p> }
-        <footer class="modal-actions"><button class="secondary-button" type="button" (click)="fecharCadastro()">Cancelar</button><button class="primary-button" type="submit" [disabled]="salvando()">{{ salvando() ? 'Salvando...' : 'Salvar operação' }}</button></footer>
+        <footer class="modal-actions">
+          @if (operacaoEmEdicao()) {
+            <button class="danger-button" type="button" [disabled]="removendo() || salvando()" (click)="remover()">{{ removendo() ? 'Removendo...' : 'Remover' }}</button>
+          }
+          <span class="actions-spacer"></span>
+          <button class="secondary-button" type="button" (click)="fecharCadastro()">Cancelar</button>
+          <button class="primary-button" type="submit" [disabled]="salvando() || removendo()">{{ salvando() ? 'Salvando...' : (operacaoEmEdicao() ? 'Salvar alterações' : 'Salvar operação') }}</button>
+        </footer>
       </form>
     </section>
   </div>

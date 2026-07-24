@@ -1,9 +1,9 @@
 <div class="app-shell" [class.menu-collapsed]="collapsed()">
   <aside class="sidebar">
     <div class="brand">
-      <img class="brand-mark" src="/brand/siga-crim-mark.svg" alt="SIGA Crim">
+      <img class="brand-mark" src="/brand/siga-crim-mark.svg" alt="SIGACrim">
       <div class="brand-copy">
-        <strong>SIGA Crim</strong>
+        <strong>SIGACrim</strong>
         <span>Sistema Integrado de Gestão e Análise Criminal</span>
       </div>
     </div>
@@ -18,8 +18,8 @@
           <span class="icon">▣</span><span class="label">Operações</span><span class="chevron">›</span>
         </button>
         <div class="submenu">
-          <a routerLink="/operacoes/cadastrar" routerLinkActive="active"><span class="dot"></span><span class="label">Cadastro de Operações</span></a>
-          <a routerLink="/operacoes/lista" routerLinkActive="active"><span class="dot"></span><span class="label">Gestão de Operações</span></a>
+          <a routerLink="/operacoes/cadastros" routerLinkActive="active"><span class="dot"></span><span class="label">Cadastros de Operações</span></a>
+          <a routerLink="/operacoes/gestao" routerLinkActive="active"><span class="dot"></span><span class="label">Gestão de Operações</span></a>
         </div>
       </div>
 
@@ -28,8 +28,8 @@
           <span class="icon">◫</span><span class="label">Eventos</span><span class="chevron">›</span>
         </button>
         <div class="submenu">
-          <a routerLink="/eventos/cadastrar" routerLinkActive="active"><span class="dot"></span><span class="label">Cadastro de Eventos</span></a>
-          <a routerLink="/eventos/lista" routerLinkActive="active"><span class="dot"></span><span class="label">Gestão de Eventos</span></a>
+          <a routerLink="/eventos/cadastros" routerLinkActive="active"><span class="dot"></span><span class="label">Cadastros de Eventos</span></a>
+          <a routerLink="/eventos/gestao" routerLinkActive="active"><span class="dot"></span><span class="label">Gestão de Eventos</span></a>
         </div>
       </div>
 
@@ -57,7 +57,7 @@
   <section class="workspace">
     <header class="topbar">
       <button class="menu-toggle" type="button" (click)="toggleMenu()" aria-label="Recolher ou expandir menu">☰</button>
-      <div class="breadcrumb">SIGA Crim <span>/</span> Área de trabalho</div>
+      <div class="breadcrumb">SIGACrim <span>/</span> Área de trabalho</div>
 
       <div class="topbar-actions">
         <button

@@ -1,0 +1,30 @@
+<section class="page-head">
+  <h1>Cadastros de Eventos</h1>
+  <button class="primary-button" type="button" disabled>Novo evento</button>
+</section>
+
+<section class="panel">
+  <div class="toolbar">
+    <input type="search" placeholder="Buscar eventos" [value]="busca()" (input)="busca.set($any($event.target).value)">
+    <span>0 eventos</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="actions-column actions-column-start">Ações</th>
+          <th>Evento</th>
+          <th>Tipo</th>
+          <th>Data e hora</th>
+          <th>Local</th>
+          <th>Situação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="state" colspan="6">Nenhum evento cadastrado.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
