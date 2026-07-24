@@ -1,0 +1,9 @@
+<div class="form-grid" [formGroup]="form">
+  <label class="wide"><span class="field-label">Nome da operação <small class="required-hint">Obrigatório</small></span><input autofocus formControlName="nome" maxlength="255" required></label>
+  <label><span>Número do inquérito</span><input class="fixed-input" formControlName="numeroInquerito" maxlength="12"></label>
+  <label><span>Data de início</span><input class="fixed-input" type="date" formControlName="dataInicio"></label>
+  <label><span>Visibilidade</span><select formControlName="visibilidadeId">@for (item of visibilidades; track item.id) { <option [value]="item.id">{{ item.descricao }}</option> }</select></label>
+  <label class="wide"><span>Razão do nome</span><textarea rows="2" formControlName="razaoNome" maxlength="1000"></textarea></label>
+  <label class="wide"><span>Descrição da operação</span><textarea rows="3" formControlName="descricao" maxlength="2000"></textarea></label>
+  <label class="wide"><span>Notas</span><textarea rows="2" formControlName="notas" maxlength="4000"></textarea></label>
+</div>

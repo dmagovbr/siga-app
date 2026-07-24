@@ -4,101 +4,32 @@
 </section>
 
 <section class="panel">
-  <div class="toolbar">
-    <input type="search" placeholder="Buscar por nome ou inquérito" [value]="busca()" (input)="atualizarBusca($any($event.target).value)">
-    <span>{{ exibidas().length }} de {{ total() }} operação(ões)</span>
-  </div>
-  @if (carregando()) { <div class="state">Carregando operações...</div> }
-  @else if (erro()) { <div class="state error">{{ erro() }}</div> }
-  @else if (!exibidas().length) { <div class="state">Nenhuma operação cadastrada.</div> }
-  @else {
-    <div class="table-wrap"><table>
-      <thead><tr>
-        <th class="actions-column actions-column-start">Ações</th>
-        <th #nomeCol class="sortable" [attr.aria-sort]="ariaSort('nome')" (click)="ordenar('nome')">
-          <span>Nome</span><span class="sort-indicator">{{ ordenacao() === 'nome' ? (direcao() === 'asc' ? '↑' : '↓') : '↕' }}</span>
-          <span class="column-resizer" (pointerdown)="iniciarRedimensionamento($event, nomeCol)"></span>
-        </th>
-        <th #inqueritoCol class="sortable" [attr.aria-sort]="ariaSort('numeroInquerito')" (click)="ordenar('numeroInquerito')">
-          <span>Inquérito</span><span class="sort-indicator">{{ ordenacao() === 'numeroInquerito' ? (direcao() === 'asc' ? '↑' : '↓') : '↕' }}</span>
-          <span class="column-resizer" (pointerdown)="iniciarRedimensionamento($event, inqueritoCol)"></span>
-        </th>
-        <th #etapaCol class="sortable" [attr.aria-sort]="ariaSort('etapaId')" (click)="ordenar('etapaId')">
-          <span>Etapa</span><span class="sort-indicator">{{ ordenacao() === 'etapaId' ? (direcao() === 'asc' ? '↑' : '↓') : '↕' }}</span>
-          <span class="column-resizer" (pointerdown)="iniciarRedimensionamento($event, etapaCol)"></span>
-        </th>
-        <th #visibilidadeCol class="sortable" [attr.aria-sort]="ariaSort('visibilidadeId')" (click)="ordenar('visibilidadeId')">
-          <span>Visibilidade</span><span class="sort-indicator">{{ ordenacao() === 'visibilidadeId' ? (direcao() === 'asc' ? '↑' : '↓') : '↕' }}</span>
-          <span class="column-resizer" (pointerdown)="iniciarRedimensionamento($event, visibilidadeCol)"></span>
-        </th>
-        <th #dataCol class="sortable" [attr.aria-sort]="ariaSort('dataInicio')" (click)="ordenar('dataInicio')">
-          <span>Data de início</span><span class="sort-indicator">{{ ordenacao() === 'dataInicio' ? (direcao() === 'asc' ? '↑' : '↓') : '↕' }}</span>
-          <span class="column-resizer" (pointerdown)="iniciarRedimensionamento($event, dataCol)"></span>
-        </th>
-      </tr></thead>
-      <tbody>
-        @for (op of exibidas(); track op.id) {
-          <tr>
-            <td class="actions-column actions-column-start">
-              <button class="table-action table-action-icon" type="button" title="Alterar operação" aria-label="Alterar operação {{ op.nome }}" (click)="abrirEdicao(op)">
-                <app-lucide-icon name="square-pen" />
-              </button>
-            </td>
-            <td><strong>{{ op.nome }}</strong><small>{{ op.razaoNome || '—' }}</small></td>
-            <td class="fixed-value">{{ op.numeroInquerito || '—' }}</td>
-            <td>{{ etapa(op.etapaId) }}</td>
-            <td>{{ visibilidade(op.visibilidadeId) }}</td>
-            <td class="fixed-value">{{ op.dataInicio ? (op.dataInicio | date:'dd/MM/yyyy') : '—' }}</td>
-          </tr>
-        }
-      </tbody>
-    </table>
-      <div #sentinela class="load-sentinel" aria-hidden="true"></div>
-    </div>
-    @if (carregandoMais()) { <div class="loading-more">Carregando mais 20 operações...</div> }
-  }
+  <app-grid-toolbar [busca]="busca()" [total]="total()" (buscaChange)="atualizarBusca($event)" />
+  <app-operacoes-grid
+    [operacoes]="operacoes()"
+    [etapas]="etapas()"
+    [visibilidades]="visibilidades()"
+    [carregando]="carregando()"
+    [carregandoMais]="carregandoMais()"
+    [erro]="erro()"
+    [ordenacao]="ordenacao()"
+    [direcao]="direcao()"
+    (ordenar)="ordenar($event)"
+    (editar)="abrirEdicao($event)"
+    (carregarMais)="carregarProximaPagina()" />
 </section>
 
 @if (modalAberto()) {
-  <div class="modal-backdrop" (mousedown)="fecharCadastro()">
-    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" (mousedown)="$event.stopPropagation()">
-      <header class="modal-header">
-        <h2 id="modal-title">{{ operacaoEmEdicao() ? 'Alterar Operação' : 'Nova Operação' }}</h2>
-        <button class="close-button" type="button" aria-label="Fechar" (click)="fecharCadastro()">×</button>
-      </header>
-
-      <div class="stage-selector" aria-label="Etapa da operação">
-        <button type="button" [class.active]="form.controls.etapaId.value === 10" [disabled]="!etapaDisponivel(10)" (click)="selecionarEtapa(10)">
-          <span class="stage-number">01</span><span><strong>Cadastro</strong><small>Etapa inicial</small></span>
-        </button>
-        <button type="button" [class.active]="form.controls.etapaId.value === 20" [disabled]="!etapaDisponivel(20)" (click)="selecionarEtapa(20)">
-          <span class="stage-number">02</span><span><strong>Pré-Deflagração</strong><small>Disponível conforme cadastro</small></span>
-        </button>
-        <button type="button" [class.active]="form.controls.etapaId.value === 30" [disabled]="!etapaDisponivel(30)" (click)="selecionarEtapa(30)">
-          <span class="stage-number">03</span><span><strong>Deflagração</strong><small>Disponível conforme cadastro</small></span>
-        </button>
-      </div>
-
-      <form [formGroup]="form" (ngSubmit)="salvar()">
-        <div class="form-grid">
-          <label class="wide"><span>Nome da operação *</span><input autofocus formControlName="nome" maxlength="255"></label>
-          <label><span>Número do inquérito</span><input class="fixed-input" formControlName="numeroInquerito" maxlength="12"></label>
-          <label><span>Data de início</span><input class="fixed-input" type="date" formControlName="dataInicio"></label>
-          <label><span>Visibilidade *</span><select formControlName="visibilidadeId">@for (item of visibilidades(); track item.id) { <option [value]="item.id">{{ item.descricao }}</option> }</select></label>
-          <label class="wide"><span>Razão do nome</span><textarea rows="2" formControlName="razaoNome" maxlength="1000"></textarea></label>
-          <label class="wide"><span>Descrição da operação</span><textarea rows="3" formControlName="descricao" maxlength="2000"></textarea></label>
-          <label class="wide"><span>Notas</span><textarea rows="2" formControlName="notas" maxlength="4000"></textarea></label>
-        </div>
-        @if (erroCadastro()) { <p class="form-error">{{ erroCadastro() }}</p> }
-        <footer class="modal-actions">
-          @if (operacaoEmEdicao()) {
-            <button class="danger-button" type="button" [disabled]="removendo() || salvando()" (click)="remover()">{{ removendo() ? 'Removendo...' : 'Remover' }}</button>
-          }
-          <span class="actions-spacer"></span>
-          <button class="secondary-button" type="button" (click)="fecharCadastro()">Cancelar</button>
-          <button class="primary-button" type="submit" [disabled]="salvando() || removendo()">{{ salvando() ? 'Salvando...' : (operacaoEmEdicao() ? 'Salvar alterações' : 'Salvar operação') }}</button>
-        </footer>
-      </form>
-    </section>
-  </div>
+  <app-operacao-modal
+    [form]="form"
+    [operacao]="operacaoEmEdicao()"
+    [visibilidades]="visibilidades()"
+    [etapasDisponiveis]="etapasDisponiveis()"
+    [erro]="erroCadastro()"
+    [salvando]="salvando()"
+    [removendo]="removendo()"
+    (fechar)="fecharCadastro()"
+    (salvar)="salvar()"
+    (remover)="remover()"
+    (etapaSelecionada)="selecionarEtapa($event)" />
 }

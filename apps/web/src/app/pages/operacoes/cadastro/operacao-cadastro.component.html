@@ -1,11 +1,11 @@
 <section class="page-head"><div><p>Gestão de Operações</p><h1>Cadastrar Operação</h1><span>Campos já existentes em <code>tb_operacao</code>.</span></div></section>
 <form class="panel" [formGroup]="form" (ngSubmit)="salvar()">
   <div class="grid">
-    <label class="wide"><span>Nome da operação *</span><input formControlName="nome" maxlength="255"></label>
+    <label class="wide required-field"><span>Nome da operação</span><input class="required-control" formControlName="nome" maxlength="255" required [class.is-invalid]="form.controls.nome.invalid && form.controls.nome.touched" [attr.aria-invalid]="form.controls.nome.invalid && form.controls.nome.touched"></label>
     <label><span>Número do inquérito</span><input formControlName="numeroInquerito" maxlength="12"></label>
     <label><span>Data de início</span><input type="date" formControlName="dataInicio"></label>
-    <label><span>Etapa *</span><select formControlName="etapaId">@for (item of etapas(); track item.id) { <option [value]="item.id">{{ item.descricao }}</option> }</select></label>
-    <label><span>Visibilidade *</span><select formControlName="visibilidadeId">@for (item of visibilidades(); track item.id) { <option [value]="item.id">{{ item.descricao }}</option> }</select></label>
+    <label><span>Etapa</span><select formControlName="etapaId">@for (item of etapas(); track item.id) { <option [value]="item.id">{{ item.descricao }}</option> }</select></label>
+    <label><span>Visibilidade</span><select formControlName="visibilidadeId">@for (item of visibilidades(); track item.id) { <option [value]="item.id">{{ item.descricao }}</option> }</select></label>
     <label class="wide"><span>Razão do nome</span><textarea rows="3" formControlName="razaoNome" maxlength="1000"></textarea></label>
     <label class="wide"><span>Descrição da operação</span><textarea rows="4" formControlName="descricao" maxlength="2000"></textarea></label>
     <label class="wide"><span>Notas</span><textarea rows="4" formControlName="notas" maxlength="4000"></textarea></label>

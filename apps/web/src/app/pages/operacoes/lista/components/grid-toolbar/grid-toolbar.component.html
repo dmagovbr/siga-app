@@ -1,0 +1,7 @@
+<div class="toolbar">
+  <label class="search-field">
+    <span>Buscar</span>
+    <input type="search" [value]="busca" placeholder="Nome ou número do inquérito" (input)="buscaChange.emit($any($event.target).value)">
+  </label>
+  <span class="total-count">{{ total }} operação(ões)</span>
+</div>

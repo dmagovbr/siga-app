@@ -1,0 +1,45 @@
+@if (carregando) { <div class="state">Carregando operações...</div> }
+@else if (erro) { <div class="state error">{{ erro }}</div> }
+@else if (!operacoes.length) { <div class="state">Nenhuma operação cadastrada.</div> }
+@else {
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th class="actions-column actions-column-start">Ações</th>
+        <th class="sortable" [attr.aria-sort]="ariaSort('nome')" (click)="ordenar.emit('nome')">
+          <span>Nome</span><span class="sort-indicator">{{ indicador('nome') }}</span><span appColumnResize class="column-resizer"></span>
+        </th>
+        <th class="sortable" [attr.aria-sort]="ariaSort('numeroInquerito')" (click)="ordenar.emit('numeroInquerito')">
+          <span>Inquérito</span><span class="sort-indicator">{{ indicador('numeroInquerito') }}</span><span appColumnResize class="column-resizer"></span>
+        </th>
+        <th class="sortable" [attr.aria-sort]="ariaSort('etapaId')" (click)="ordenar.emit('etapaId')">
+          <span>Etapa</span><span class="sort-indicator">{{ indicador('etapaId') }}</span><span appColumnResize class="column-resizer"></span>
+        </th>
+        <th class="sortable" [attr.aria-sort]="ariaSort('visibilidadeId')" (click)="ordenar.emit('visibilidadeId')">
+          <span>Visibilidade</span><span class="sort-indicator">{{ indicador('visibilidadeId') }}</span><span appColumnResize class="column-resizer"></span>
+        </th>
+        <th class="sortable" [attr.aria-sort]="ariaSort('dataInicio')" (click)="ordenar.emit('dataInicio')">
+          <span>Data de início</span><span class="sort-indicator">{{ indicador('dataInicio') }}</span><span appColumnResize class="column-resizer"></span>
+        </th>
+      </tr></thead>
+      <tbody>
+        @for (op of operacoes; track op.id) {
+          <tr>
+            <td class="actions-column actions-column-start">
+              <button class="table-action table-action-icon" type="button" title="Alterar operação" [attr.aria-label]="'Alterar operação ' + op.nome" (click)="editar.emit(op)">
+                <app-lucide-icon name="square-pen" />
+              </button>
+            </td>
+            <td><strong>{{ op.nome }}</strong></td>
+            <td class="fixed-value">{{ op.numeroInquerito || '—' }}</td>
+            <td>{{ etapa(op.etapaId) }}</td>
+            <td>{{ visibilidade(op.visibilidadeId) }}</td>
+            <td class="fixed-value">{{ op.dataInicio ? (op.dataInicio | date:'dd/MM/yyyy') : '—' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <div appInfiniteScrollSentinel (reached)="carregarMais.emit()" class="load-sentinel" aria-hidden="true"></div>
+  </div>
+  @if (carregandoMais) { <div class="loading-more">Carregando mais 20 operações...</div> }
+}

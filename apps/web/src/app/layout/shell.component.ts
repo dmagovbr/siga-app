@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
+import { CalculatorComponent } from '../shared/components/calculator/calculator.component';
 
 interface HealthResponse { status: string; }
 type Theme = 'light' | 'dark';
@@ -10,7 +11,7 @@ type ApiStatus = 'carregando' | 'online' | 'offline';
 @Component({
   selector: 'app-shell',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, CalculatorComponent],
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.css'
 })

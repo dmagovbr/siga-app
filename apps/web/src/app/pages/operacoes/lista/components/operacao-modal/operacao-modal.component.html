@@ -1,0 +1,26 @@
+<div class="modal-backdrop" (mousedown)="solicitarFechamento()">
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" (mousedown)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2 id="modal-title">{{ operacao ? 'Alterar Operação' : 'Nova Operação' }}</h2>
+      <button class="close-button" type="button" aria-label="Fechar" (click)="solicitarFechamento()">×</button>
+    </header>
+
+    <app-etapa-selector
+      [etapaId]="form.controls.etapaId.value"
+      [etapasDisponiveis]="etapasDisponiveis"
+      (etapaSelecionada)="etapaSelecionada.emit($event)" />
+
+    <form [formGroup]="form" (ngSubmit)="salvar.emit()">
+      <app-operacao-form-fields [form]="form" [visibilidades]="visibilidades" />
+      @if (erro) { <p class="form-error">{{ erro }}</p> }
+      <footer class="modal-actions">
+        @if (operacao) {
+          <button class="danger-button" type="button" [disabled]="removendo || salvando" (click)="remover.emit()">{{ removendo ? 'Removendo...' : 'Remover' }}</button>
+        }
+        <span class="actions-spacer"></span>
+        <button class="secondary-button" type="button" (click)="solicitarFechamento()">Cancelar</button>
+        <button class="primary-button" type="submit" [disabled]="salvando || removendo">{{ salvando ? 'Salvando...' : (operacao ? 'Salvar alterações' : 'Salvar operação') }}</button>
+      </footer>
+    </form>
+  </section>
+</div>

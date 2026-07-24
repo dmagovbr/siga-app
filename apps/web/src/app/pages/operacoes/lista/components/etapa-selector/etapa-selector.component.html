@@ -1,0 +1,11 @@
+<div class="stage-selector" aria-label="Etapa da operação">
+  <button type="button" [class.active]="etapaId === 10" [disabled]="!disponivel(10)" (click)="etapaSelecionada.emit(10)">
+    <span class="stage-number">01</span><span><strong>Cadastro</strong><small>Etapa inicial</small></span>
+  </button>
+  <button type="button" [class.active]="etapaId === 20" [disabled]="!disponivel(20)" (click)="etapaSelecionada.emit(20)">
+    <span class="stage-number">02</span><span><strong>Pré-Deflagração</strong><small>Disponível conforme cadastro</small></span>
+  </button>
+  <button type="button" [class.active]="etapaId === 30" [disabled]="!disponivel(30)" (click)="etapaSelecionada.emit(30)">
+    <span class="stage-number">03</span><span><strong>Deflagração</strong><small>Disponível conforme cadastro</small></span>
+  </button>
+</div>
