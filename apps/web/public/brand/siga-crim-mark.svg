@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">SIGA Crim</title>
+  <desc id="desc">Símbolo do Sistema Integrado de Gestão e Análise Criminal</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#123f69"/>
+      <stop offset="100%" stop-color="#0a2238"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e4c36a"/>
+      <stop offset="100%" stop-color="#b58b38"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <path d="M64 18 95 30v24c0 23-12.5 42.5-31 56C45.5 96.5 33 77 33 54V30l31-12Z" fill="none" stroke="url(#gold)" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M64 40c-10 0-18 7.6-18 17 0 8.2 5.7 15.1 13.5 16.8V88h9V73.8C76.3 72.1 82 65.2 82 57c0-9.4-8-17-18-17Zm0 9c4.9 0 9 3.6 9 8s-4.1 8-9 8-9-3.6-9-8 4.1-8 9-8Z" fill="url(#gold)"/>
+</svg>

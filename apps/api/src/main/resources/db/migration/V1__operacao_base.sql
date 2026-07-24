@@ -258,19 +258,8 @@ create index ix_tb_usuario__ds_email on tb_usuario (ds_email);
 create index ix_tb_unidade__id_uf_fk on tb_unidade (id_uf_fk);
 create index ix_tb_area_atribuicao__id_unidade_fk on tb_area_atribuicao (id_unidade_fk);
 
-insert into tb_perfil (cd_perfil, no_perfil, ds_perfil)
-values ('administrador', 'Administrador', 'Acesso administrativo inicial do SIGACrim');
-
--- Usuário local inicial. Senha: Admin@123. Troca obrigatória no primeiro acesso.
-insert into tb_usuario (cd_usuario, no_usuario, ds_email, ds_senha_hash)
-values ('admin', 'Administrador Local', 'admin@sigacrim.local', '$2y$10$g2xhU2e6XPwccQ6za2kUXuYOszM2xIT/SamZXvSxY4HMFCljX1vCq');
-
-insert into tb_usuario_perfil (id_usuario_fk, id_perfil_fk)
-select u.id_usuario, p.id_perfil
-from tb_usuario u cross join tb_perfil p
-where u.cd_usuario = 'admin' and p.cd_perfil = 'administrador';
-
 -- Perfis e usuário inicial do ambiente local.
+-- Esta é a carga inicial única da V1 para um banco vazio.
 insert into tb_perfil (cd_perfil, no_perfil, ds_perfil)
 values
     ('administrador', 'Administrador', 'Acesso administrativo ao SIGACrim'),

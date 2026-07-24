@@ -1,33 +1,42 @@
 <div class="app-shell" [class.menu-collapsed]="collapsed()">
   <aside class="sidebar">
     <div class="brand">
-      <div class="brand-mark">S</div>
-      <div class="brand-copy"><strong>SIGACrim</strong><span>Sistema de Gestão</span></div>
+      <img class="brand-mark" src="/brand/siga-crim-mark.svg" alt="SIGA Crim">
+      <div class="brand-copy">
+        <strong>SIGA Crim</strong>
+        <span>Sistema Integrado de Gestão e Análise Criminal</span>
+      </div>
     </div>
 
     <nav aria-label="Menu principal">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" title="Início">
         <span class="icon">⌂</span><span class="label">Início</span>
       </a>
 
       <div class="nav-group" [class.open]="openGroup() === 'operacoes'">
-        <button type="button" (click)="toggleGroup('operacoes')"><span class="icon">▣</span><span class="label">Operações</span><span class="chevron">›</span></button>
+        <button type="button" (click)="toggleGroup('operacoes')" title="Operações">
+          <span class="icon">▣</span><span class="label">Operações</span><span class="chevron">›</span>
+        </button>
         <div class="submenu">
-          <a routerLink="/operacoes/lista" routerLinkActive="active"><span class="dot"></span><span class="label">Lista de Operações</span></a>
-          <a routerLink="/operacoes/gestao" routerLinkActive="active"><span class="dot"></span><span class="label">Gestão</span></a>
+          <a routerLink="/operacoes/cadastrar" routerLinkActive="active"><span class="dot"></span><span class="label">Cadastro de Operações</span></a>
+          <a routerLink="/operacoes/lista" routerLinkActive="active"><span class="dot"></span><span class="label">Gestão de Operações</span></a>
         </div>
       </div>
 
       <div class="nav-group" [class.open]="openGroup() === 'eventos'">
-        <button type="button" (click)="toggleGroup('eventos')"><span class="icon">◫</span><span class="label">Eventos</span><span class="chevron">›</span></button>
+        <button type="button" (click)="toggleGroup('eventos')" title="Eventos">
+          <span class="icon">◫</span><span class="label">Eventos</span><span class="chevron">›</span>
+        </button>
         <div class="submenu">
-          <a routerLink="/eventos/lista" routerLinkActive="active"><span class="dot"></span><span class="label">Lista de Operações</span></a>
-          <a routerLink="/eventos/gestao" routerLinkActive="active"><span class="dot"></span><span class="label">Gestão</span></a>
+          <a routerLink="/eventos/cadastrar" routerLinkActive="active"><span class="dot"></span><span class="label">Cadastro de Eventos</span></a>
+          <a routerLink="/eventos/lista" routerLinkActive="active"><span class="dot"></span><span class="label">Gestão de Eventos</span></a>
         </div>
       </div>
 
-      <div class="nav-group" [class.open]="openGroup() === 'administracao'">
-        <button type="button" (click)="toggleGroup('administracao')"><span class="icon">⚙</span><span class="label">Administração</span><span class="chevron">›</span></button>
+      <div class="nav-group" [class.open]="openGroup() === 'administrativo'">
+        <button type="button" (click)="toggleGroup('administrativo')" title="Administrativo">
+          <span class="icon">⚙</span><span class="label">Administrativo</span><span class="chevron">›</span>
+        </button>
         <div class="submenu">
           <a routerLink="/administracao/usuarios" routerLinkActive="active"><span class="dot"></span><span class="label">Usuários</span></a>
           <a routerLink="/administracao/perfis" routerLinkActive="active"><span class="dot"></span><span class="label">Perfis</span></a>
@@ -35,14 +44,41 @@
       </div>
     </nav>
 
-    <div class="sidebar-footer"><span class="status-dot"></span><span class="label">Ambiente local</span></div>
+    <div class="sidebar-footer">
+      <div class="environment-status" title="Ambiente de desenvolvimento local">
+        <span class="status-dot online"></span><span class="label">Ambiente local</span>
+      </div>
+      <div class="environment-status" [attr.data-state]="apiStatus()" [title]="apiLabel()">
+        <span class="status-dot"></span><span class="label">{{ apiLabel() }}</span>
+      </div>
+    </div>
   </aside>
 
   <section class="workspace">
     <header class="topbar">
       <button class="menu-toggle" type="button" (click)="toggleMenu()" aria-label="Recolher ou expandir menu">☰</button>
-      <div class="breadcrumb">SIGACrim <span>/</span> Área de trabalho</div>
-      <div class="user"><span>{{ usuario()?.nome }}</span><div class="avatar">{{ initials() }}</div><button class="logout" type="button" (click)="logout()">Sair</button></div>
+      <div class="breadcrumb">SIGA Crim <span>/</span> Área de trabalho</div>
+
+      <div class="topbar-actions">
+        <button
+          class="theme-toggle"
+          type="button"
+          (click)="toggleTheme()"
+          [attr.aria-label]="theme() === 'light' ? 'Ativar tema escuro' : 'Ativar tema claro'"
+          [title]="theme() === 'light' ? 'Ativar tema escuro' : 'Ativar tema claro'">
+          @if (theme() === 'light') {
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>
+          } @else {
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          }
+        </button>
+
+        <div class="user">
+          <span>{{ usuario()?.nome }}</span>
+          <div class="avatar">{{ initials() }}</div>
+          <button class="logout" type="button" (click)="logout()">Sair</button>
+        </div>
+      </div>
     </header>
     <main><ng-content /></main>
   </section>
